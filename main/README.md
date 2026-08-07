@@ -1,0 +1,1 @@
+Carpeta enfocada para documentar las prácticas de la clase de minería de datos.
