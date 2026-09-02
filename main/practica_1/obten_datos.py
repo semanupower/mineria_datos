@@ -1,19 +1,25 @@
-# clase 20220205 min 1:01:43
 import kagglehub
+import time
 import os
-import discogs_client as discogs
-from bs4 import BeautifulSoup
-import requests
+from pathlib import Path
 import pandas as pd
+from tabulate import tabulate
 
 def get_csv() -> str:
-    dir = f'{os.path.dirname(__file__)}\\dataset'
+    dir = f'{Path(__file__).parents[1]}\\dataset'
     if os.path.isdir(f'{dir}\\datasets') == False:
         os.environ['KAGGLEHUB_CACHE'] = f'{dir}'
-        return path = kagglehub.dataset_download("sohrabdaemi/discogs-database-all-release-data")
+        path = kagglehub.dataset_download("sohrabdaemi/discogs-database-all-release-data")
+        return path
         
     path = f'{dir}\\datasets\\sohrabdaemi\\discogs-database-all-release-data\\versions\\1'
     return path
 
-def get_df(path: str):
-    return pd.DataFrame(path)
+def mod_csv(path: str) -> pd.DataFrame:
+    df = pd.read_csv(path)
+    print(tabulate(df[df.isnull().any(axis=1)].head(10), headers=df.columns))
+    df.dropna(inplace=True)
+    df.to_csv(path, index=False)
+
+path= f'{get_csv()}\\release_data\\release_data.csv'
+mod_csv(path)
