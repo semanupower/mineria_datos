@@ -1,5 +1,4 @@
 import kagglehub
-import time
 import os
 from pathlib import Path
 import pandas as pd
@@ -12,7 +11,7 @@ def get_csv() -> str:
         path = kagglehub.dataset_download("sohrabdaemi/discogs-database-all-release-data")
         return path
         
-    path = f'{dir}\\datasets\\sohrabdaemi\\discogs-database-all-release-data\\versions\\1'
+    path = f'{dir}\\datasets\\sohrabdaemi\\discogs-database-all-release-data\\versions\\1\\release_data\\release_data.csv'
     return path
 
 def mod_csv(path: str) -> pd.DataFrame:
@@ -21,5 +20,5 @@ def mod_csv(path: str) -> pd.DataFrame:
     df.dropna(inplace=True)
     df.to_csv(path, index=False)
 
-path= f'{get_csv()}\\release_data\\release_data.csv'
+path= get_csv()
 mod_csv(path)
