@@ -63,9 +63,11 @@ plt.title('Los 5 formatos con mayores lanzamientos a través de los años')
 plt.tight_layout()
 plt.savefig(os.path.join(dir_actual, "top5_formats_pie.jpg"))
 plt.close()
+
 #histogramas
 plt.figure(figsize=(12,5))
-sns.histplot(data=df, x='year', hue='genre', palette='pastel',multiple='stack', bins=30)
+sns.histplot(data=df, x='year', hue='genre', palette='bright',multiple='stack', bins=30)
+plt.ticklabel_format(style='plain', axis='y')
 plt.title('Lanzamientos por año, por género')
 plt.tight_layout()
 plt.savefig(os.path.join(dir_actual, "topgenres_peryear_histogram.jpg"))
