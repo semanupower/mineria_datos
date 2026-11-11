@@ -24,13 +24,14 @@ df = df[(df['year'] >= 1930) & (df['year'] <= 2019)]
 count = df.groupby(['genre', 'year'])['release_id'].count().reset_index(name='conteo')
 
 generos = df['genre'].value_counts().head(6).index
+print(generos)
 for genero in generos:
     serie = (count[count['genre'] == genero].set_index('year')['conteo'].reindex(range(1930,2019), fill_value=0))
     modelo = ExponentialSmoothing(serie.values, trend='add').fit()
     pronostico = modelo.forecast(5)
     años_futuros = list(range(2020, 2025))
 
-    linea, _= plt.plot(serie.index, serie.values, label='genero')
+    linea, = plt.plot(serie.index, serie.values, label='genero')
     plt.plot(años_futuros, pronostico, '--', color=linea.get_color())
 
 plt.xlabel('Año')
